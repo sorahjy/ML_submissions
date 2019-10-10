@@ -10,7 +10,8 @@ def _load_images(file_name):
         buf = binfile.read()
         magic, num, rows, cols = struct.unpack_from('>IIII', buf, 0)
         bits = num * rows * cols
-        images = struct.unpack_from('>' + str(bits) + 'B', buf, struct.calcsize('>IIII'))
+        images = struct.unpack_from('>' + str(bits)
+                                    + 'B', buf, struct.calcsize('>IIII'))
         images = np.reshape(images, [num, rows * cols])
     return images
 
