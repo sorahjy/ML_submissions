@@ -2,15 +2,12 @@ import numpy as np
 import random
 
 from sklearn import metrics
-from sklearn.cross_validation import KFold, cross_val_score
-from sklearn.linear_model import Lasso, LogisticRegression, Perceptron
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression, Perceptron
 from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-
 from datasets import load_mnist
 
 
@@ -242,12 +239,9 @@ def model_selection():
         ('Linear SVM', Pipeline([('Scaler', StandardScaler()), ('Linear SVM', SVC(kernel="linear", C=0.025))])))
     pipelines.append(('SVM RBF', Pipeline([('Scaler', StandardScaler()), ('SVM RBF', SVC(gamma=2, C=1))])))
     for name, model in pipelines:
-        try:
-            model.fit(x_train, y_train)
-            y_pred_class = model.predict(x_test)
-            print('name', metrics.accuracy_score(y_test, y_pred_class))
-        except Exception:
-            print(name, '炸了')
+        model.fit(x_train, y_train)
+        y_pred_class = model.predict(x_test)
+        print('name', metrics.accuracy_score(y_test, y_pred_class))
 
 
 if __name__ == '__main__':
